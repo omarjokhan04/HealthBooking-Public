@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <nav class="navbar navbar-light bg-white shadow-sm mb-4">
@@ -7,7 +6,6 @@
         <router-link to="/appointments" class="btn btn-outline-primary">⇆ Switch Page</router-link>
       </div>
     </nav>
-
     <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
       <div class="card shadow p-5" style="width: 100%; max-width: 700px;">
         <h2 class="text-center mb-4 text-primary">Book an Appointment</h2>
@@ -34,7 +32,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: "BookAppointment",
@@ -47,11 +44,10 @@ export default {
     };
   },
   mounted() {
-    fetch("https://e2m2b7y8c9.execute-api.us-east-1.amazonaws.com/prod/slots")
+    fetch("https://lq2t8qhujb.execute-api.eu-north-1.amazonaws.com/Prod/slots")
       .then(res => res.json())
       .then(data => {
-        const parsed = JSON.parse(data.body);
-        this.slots = parsed.filter(s => !s.isBooked).map(s => s.slot);
+        this.slots = data.filter(s => !s.isBooked).map(s => s.slot);
       });
   },
   methods: {
@@ -61,11 +57,10 @@ export default {
         symptoms: this.symptoms,
         slot: this.selectedSlot
       };
-
-      fetch("https://e2m2b7y8c9.execute-api.us-east-1.amazonaws.com/prod/appointments", {
+      fetch("https://lq2t8qhujb.execute-api.eu-north-1.amazonaws.com/Prod/appointments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ body: JSON.stringify(payload) })
+        body: JSON.stringify(payload)
       })
         .then(res => res.json())
         .then(() => {
